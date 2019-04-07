@@ -1,0 +1,41 @@
+*PPD-Adobe: "4.3"
+
+*%% Minimal config file for Diablo-630 emulation
+
+*%%     ___________
+*%%    |           |
+*%%    | PPD File. |
+*%%    |           |
+*%%  (============(@|
+*%%  |            | |
+*%%  | [        ] | |
+*%%  |____________|/
+*%%
+
+*%% About this PPD file
+*LanguageLevel: "2"
+*LanguageEncoding: ISOLatin1
+*LanguageVersion: English
+*PCFileName: "ipp-server-diablo630.ppd"
+
+*%% Basic capabilities of the device
+*FileSystem: False
+
+*%% Printer name
+*Product: "ipp-server"
+*Manufacturer:  "h2g2bob"
+*ModelName: "ipp-server-diablo630"
+
+*%% Color
+*ColorDevice: False
+*Throughput: "1"
+*Password: "0"
+
+*%% CUPS filter for plain text
+*cupsFilter2: "text/plain application/vnd.cups-raw 0 -"
+
+*%% Diablo 630 emulation (plaintext with some escape sequences)
+*%% embedded between markers in a PostScript document
+*Emulators: diablo630
+*StartEmulator_diablo630: "currentfile /hpcl statusdict /emulate get exec "
+*StopEmulator_diablo630: "<1B7F>0"
