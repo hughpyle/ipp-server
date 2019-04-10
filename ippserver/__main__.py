@@ -98,11 +98,16 @@ def main(args=None):
     parsed_args = parse_args(args)
     logging.basicConfig(level=logging.DEBUG if parsed_args.verbose else logging.INFO)
 
-    server = IPPServer(
-        (parsed_args.host, parsed_args.port),
-        IPPRequestHandler,
-        behaviour_from_parsed_args(parsed_args))
-    run_server(server)
+    try:
+        server = IPPServer(
+            (parsed_args.host, parsed_args.port),
+            IPPRequestHandler,
+            behaviour_from_parsed_args(parsed_args))
+        run_server(server)
+    except OSError as ex:
+        # Port is in use, or some other bad error
+        sys.exit(ex)
+
 
 if __name__ == "__main__":
     main()
