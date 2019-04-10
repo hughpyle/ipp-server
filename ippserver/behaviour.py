@@ -76,7 +76,9 @@ class Behaviour(object):
             'IPP %r -> %s.%s', ipp_request.opid_or_status, type(self).__name__,
             command_function.__name__
         )
-        return command_function(ipp_request, postscript_file)
+        result = command_function(ipp_request, postscript_file)
+        logging.debug(result)
+        return result
 
     def get_handle_command_function(self, opid_or_status):
         raise NotImplementedError()
