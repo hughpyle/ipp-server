@@ -1,17 +1,6 @@
 *PPD-Adobe: "4.3"
 
-*%% This is a minimal config file
-*%% and is almost certainly missing lots of features
-
-*%%     ___________
-*%%    |           |
-*%%    | PPD File. |
-*%%    |           |
-*%%  (============(@|
-*%%  |            | |
-*%%  | [        ] | |
-*%%  |____________|/
-*%%
+*%% Minimal config file for an HPGL pen-plotter.
 
 *%% About this PPD file
 *LanguageLevel: "2"

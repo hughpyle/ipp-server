@@ -107,7 +107,7 @@ class IPPRequestHandler(BaseHTTPRequestHandler):
         self.handle_www()
 
     def handle_www(self):
-        logging.info("www: {}".format(self.path))
+        logging.debug("www: {}".format(self.path))
         if self.path == '/':
             self.send_headers(
                 status=200, content_type='text/plain'
@@ -137,9 +137,9 @@ class IPPRequestHandler(BaseHTTPRequestHandler):
         return True
 
     def handle_ipp(self):
-        logging.info("ipp: {}".format(self.path))
+        logging.debug("ipp: {}".format(self.path))
         self.ipp_request = request.IppRequest.from_file(self.rfile)
-        logging.info(self.ipp_request)
+        logging.debug(self.ipp_request)
 
         if self.server.behaviour.expect_page_data_follows(self.ipp_request):
             self.send_headers(

@@ -23,23 +23,19 @@ def parse_args(args=None):
     parser.add_argument('-v', '--verbose', action='count', help='Add debugging')
     parser.add_argument('-H', '--host', type=str, default='localhost', metavar='HOST', help='Address to listen on')
     parser.add_argument('-p', '--port', type=int, required=True, metavar='PORT', help='Port to listen on')
+    parser.add_argument('--pdf', action='store_true', default=False, help=pdf_help)
+    parser.add_argument('--ppd', type=str, metavar='PPD', help='Name of the PPD file')
 
     parser_action = parser.add_subparsers(help='Actions', dest='action')
 
     parser_save = parser_action.add_parser('save', help='Write any print jobs to disk')
-    parser_save.add_argument('--pdf', action='store_true', default=False, help=pdf_help)
-    parser_save.add_argument('--ppd', type=str, metavar='PPD', help='Name of the PPD file')
     parser_save.add_argument('directory', metavar='DIRECTORY', help='Directory to save files into')
 
     parser_command = parser_action.add_parser('run', help='Run a command when recieving a print job')
     parser_command.add_argument('command', nargs=argparse.REMAINDER, metavar='COMMAND', help='Command to run')
-    parser_command.add_argument('--pdf', action='store_true', default=False, help=pdf_help)
-    parser_command.add_argument('--ppd', type=str, metavar='PPD', help='Name of the PPD file')
     parser_command.add_argument('--env', action='store_true', default=False, help="Store Job attributes in environment (IPP_JOB_ATTRIBUTES)")
 
     parser_saverun = parser_action.add_parser('saveandrun', help='Write any print jobs to disk and the run a command on them')
-    parser_saverun.add_argument('--pdf', action='store_true', default=False, help=pdf_help)
-    parser_saverun.add_argument('--ppd', type=str, metavar='PPD', help='Name of the PPD file')
     parser_saverun.add_argument('--env', action='store_true', default=False, help="Store Job attributes in environment (IPP_JOB_ATTRIBUTES)")
     parser_saverun.add_argument('directory', metavar='DIRECTORY', help='Directory to save files into')
     parser_saverun.add_argument('command', nargs=argparse.REMAINDER, metavar='COMMAND', help='Command to run (the filename will be added at the end)')
@@ -47,8 +43,6 @@ def parse_args(args=None):
     parser_command = parser_action.add_parser('reject', help='Respond to all print jobs with job-canceled-at-device')
 
     parser_command = parser_action.add_parser('pc2paper', help='Post print jobs using http://www.pc2paper.org/')
-    parser_command.add_argument('--pdf', action='store_true', default=False, help=pdf_help)
-    parser_command.add_argument('--ppd', type=str, metavar='PPD', help='Name of the PPD file')
     parser_command.add_argument('--config', metavar='CONFIG', help='File containing an address to send to, in json format')
     parser_loader = parser_action.add_parser('load', help='Load own behaviour')
     parser_loader.add_argument('path', nargs=1, metavar=['PATH'], help='Module implementing behaviour')
@@ -58,6 +52,7 @@ def parse_args(args=None):
 
 
 def behaviour_from_parsed_args(args):
+    logging.debug(args)
     if args.action == 'save':
         return behaviour.SaveFilePrinter(
             uri=args.host + ":" + str(args.port),
